@@ -7,9 +7,17 @@ def binary_img(img):
 
     return img
 
-def slice(img,x,y):
-    w = 150
-    h = 150
-    img = img[y:y+h,x:x+w]
+def slice(original):
+    x = 37;
+    y = 62;
+    w = 12;
+    h = 17
+    img = []
+    roi = []
 
-    return img
+    for i in range(0,4+1):
+        roi.append(original[y:y+h, x:x+w])
+        img.append(roi[i].copy())
+        rec = cv2.rectangle(original[i], (0, 0), (w - 1, h - 1), (255, 0, 0))
+        x = x + 11
+    return img, rec

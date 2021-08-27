@@ -1,2 +1,2 @@
 # AUTO-MusixBox
-captstondiesign2 team project
+capstone design2 team project

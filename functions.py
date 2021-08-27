@@ -14,11 +14,12 @@ def slice(original):
     h = 17
     img = []
     roi = []
+    original_copy = original.copy()
 
     for i in range(0,30+1):
         roi.append(original[y:y+h, x:x+w])
         img.append(roi[i].copy())
-        rec = cv2.rectangle(original, (x, y), (x+w, y+h), (255, 0, 0))
+        rec = cv2.rectangle(original_copy, (x, y), (x+w, y+h), (255, 0, 0))
         x = x + 11
 
     return img, rec

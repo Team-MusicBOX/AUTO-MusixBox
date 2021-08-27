@@ -5,8 +5,6 @@ file_name = "C:/Users/ghwt0504/Desktop/music.jpg"
 
 music_pic = cv2.imread(file_name, cv2.IMREAD_COLOR)
 music_pic = cv2.resize(music_pic,dsize=(400,400),interpolation=cv2.INTER_CUBIC)
-h, w, c = music_pic.shape
-ryan_img = []
 ain = 0
 
 if music_pic is not None:

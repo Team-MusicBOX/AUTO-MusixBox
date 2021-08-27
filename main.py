@@ -1,7 +1,5 @@
 import cv2
-
 import functions
-import functions as fc
 
 file_name = "C:/Users/ghwt0504/Desktop/music.jpg"
 

@@ -22,7 +22,7 @@ for i in img:
     cv2.moveWindow("piece" + str(ain) ,30 * ain ,400)
     ain = ain + 1
 
-cv2.imshow("god ",rec)
+cv2.imshow("marking",rec)
 cv2.waitKey(0)
 
 cv2.destroyAllWindows()

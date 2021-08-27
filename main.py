@@ -6,11 +6,12 @@ file_name = "C:/Users/ghwt0504/Desktop/music.jpg"
 music_pic = cv2.imread(file_name, cv2.IMREAD_COLOR)
 music_pic = cv2.resize(music_pic,dsize=(400,400),interpolation=cv2.INTER_CUBIC)
 ain = 0
+num = 0 #slice y위치 조절
 
 if music_pic is not None:
     cv2.imshow("music", music_pic)
     if cv2.waitKey(0) == ord('c'):
-        img,rec = functions.slice(music_pic)
+        img,rec = functions.slice(music_pic,num)
 
 for i in img:
 

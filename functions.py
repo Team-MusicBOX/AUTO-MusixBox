@@ -7,11 +7,11 @@ def binary_img(img):
 
     return img
 
-def slice(original):
+def slice(original,num):
     x = 37
-    y = 62
+    y = 62 + (num * 17)
     w = 12
-    h = 17
+    h = 16
     img = []
     roi = []
     original_copy = original.copy()

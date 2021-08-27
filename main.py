@@ -1,7 +1,7 @@
 import cv2
 
-import funcions
-import funcions as fc
+import functions
+import functions as fc
 
 file_name = "C:/Users/ghwt0504/Desktop/music.jpg"
 
@@ -14,7 +14,7 @@ ain = 0
 if music_pic is not None:
     cv2.imshow("music", music_pic)
     if cv2.waitKey(0) == ord('c'):
-        img,rec = funcions.slice(music_pic)
+        img,rec = functions.slice(music_pic)
 
 for i in img:
 

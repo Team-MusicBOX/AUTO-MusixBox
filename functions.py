@@ -1,37 +1,71 @@
 import cv2
 import numpy as np
+from multiprocessing import Process
+import pyglet
+
+# do re mi fa sol la si do
 
 import winsound # 윈도우에서만 돌아감 수정필수
 
 #이진화 함수
-def binary_img(img):
-    # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # img[img < 110] = 0
-    # img[img >= 110] = 255
+def makeBinaryImg(img):
+    # b_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # b_img[b_img < 110] = 0
+    # b_img[b_img >= 110] = 255
 
-    _, b_img = cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV)
+    _, b_img = cv2.threshold(img,110,255,cv2.THRESH_BINARY_INV)
 
     return b_img
 
-def slice(original):
-    x = 37
-    y = 62
-    w = 12
-    h = 17
-    img = []
+
+def sliceImg(original, CUTLINE):
+    x = 39
+    y = 95
+    w = 11
+    h = 16
+    img_list = []
     roi = []
 
-    for i in range(0,30+1):
-        roi.append(original[y:y+h, x:x+w])
-        img.append(roi[i].copy())
-        rec = cv2.rectangle(original, (x, y), (x+w, y+h), (255, 0, 0))
-        x = x + 11
+    for j in range(0, CUTLINE):
+        for i in range(0, 29 + 1):
+            roi.append(original[y:y + h, x:x + w])
+            img_list.append(roi[i].copy())
+            rec = cv2.rectangle(original, (x, y), (x+w, y+h), (255, 0, 0))
+            x = x + 12
+        y = y + 17
+        x = 39
+        roi = []
 
-    return img, rec
+    return img_list, rec
 
-def music_play():
-    duration =  1000 # milliseconds
-    notes = [262 ,294, 330, 349, 392, 440, 494, 523, 587]
-    freq = 65
-    for i in notes:
-        winsound.Beep(i,duration)
+
+def calAvg(list):             # 입력받은 이미지 리스트를 평균값으로
+    avg_list = []
+    for i in range(len(list)):
+        avg_list.append(list[i].mean())
+    return avg_list
+
+def findNote(list):    # 입력받은 평균값 리스트를 이진화로
+    for i in range(len(list)):
+        if list[i] < 110:
+            list[i] = 0
+        else:
+            list[i] = 1
+    return list
+
+def findFirstLine(list):
+    if list[22] == 0 and list[25] == 0:  #뒷부분이 흰색이면 악보 들어옴
+        return 1
+    else:
+        return 0
+
+def checkPosition(img_list,CUTLINE):
+    note_position = []
+    for i in range(CUTLINE):
+        cut_position = []
+        for j in range(i*30, i*30+30):
+            if img_list[j] == 1:
+                cut_position.append(j%30)
+        note_position.append(cut_position)
+
+    return note_position

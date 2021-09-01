@@ -7,33 +7,49 @@
 
 import cv2
 import numpy as np
+import switch as switch
+from multiprocessing import Process
+from time import sleep
+import pyglet
+
 import functions as fs
+# import playNotes as pn
+import playThread as pT
 
 path = "C:/DevSpace/capstone2/images/"  # 파일 경로
 image_name = "music_test.jpg"       # 이미지 파일 이름
 
+note_list = []  # 30노트중 해당 음이 있는자리가 몇번째인지 확인하기 위한 리스트, 자료형은 int
+play_notes = [] # 음을 다중 실행 하기 위한 쓰레드를 저장하기 위한 리스트.
+
+CUTLINE = 4 # 이미지에서 몇줄을 끊을건지
+
 music_pic = cv2.imread(path + image_name)
-music_pic = cv2.resize(music_pic,dsize=(400,400),interpolation=cv2.INTER_CUBIC)
-music_pic = fs.binary_img(music_pic)
+music_pic = cv2.resize(music_pic,dsize=(420,400),interpolation=cv2.INTER_CUBIC)
+music_pic = fs.makeBinaryImg(music_pic)
 
-h, w, c = music_pic.shape
-cnt = 0
+cnt = 0 #
 
-fs.music_play()
+img_list = []
 
+# 'c'를 입력하면 화면을 자름
 if music_pic is not None:
     cv2.imshow("music", music_pic)
     if cv2.waitKey(0) == ord('c'):
-        img,rec = fs.slice(music_pic)
+        img_list, rec = fs.sliceImg(music_pic,CUTLINE)
 
-for i in img:
+print(len(img_list))
 
-    cv2.imshow("piece"+ str(cnt),i)
-    print(cnt , i.mean())
-    cv2.moveWindow("piece" + str(cnt) ,30 * cnt ,400)
-    cnt = cnt + 1
 
-cv2.imshow("marking",rec)
-cv2.waitKey(0)
+img = fs.calAvg(img_list)
+print(img)
+img = fs.findNote(img)
+print(img)
 
+finalPosition = fs.checkPosition(img,CUTLINE)
+print("Final position: ", finalPosition)
+
+pT.playMusic(finalPosition)
+
+cv2.waitKey()
 cv2.destroyAllWindows()

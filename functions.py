@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from multiprocessing import Process
-import pyglet
 
 # do re mi fa sol la si do
 
@@ -20,7 +19,7 @@ def makeBinaryImg(img):
 
 def sliceImg(original, CUTLINE):
     x = 39
-    y = 95
+    y = 62
     w = 11
     h = 16
     img_list = []
@@ -38,6 +37,17 @@ def sliceImg(original, CUTLINE):
 
     return img_list, rec
 
+# def playMusic(note_num):
+#     notes_index = []
+#     duration =  1000 # milliseconds
+#     notes = {'c': 65,'d': 73,'g': 98,'a': 110,'b': 123,'c1': 131,'d1': 147, 'e1': 165,'f1': 174,'f1_s':185,
+#              'g1':196,'g1_s':207,'a1': 220,'a1_s':233, 'b1':247,'c2':261,'c2_s':277,'d2':293,'d2_s':311,'e2':329,
+#              'f2':349,'f2_s':370, 'g2':392,'g2_s':415,'a2':440,'a2_s':466,'b2':494,'c3':523,'d3':587,'e3':659}
+#
+#     for i in notes.values():
+#         notes_index.append(int(i))
+#
+#     winsound.Beep(notes_index[note_num]*2,duration)
 
 def calAvg(list):             # 입력받은 이미지 리스트를 평균값으로
     avg_list = []
